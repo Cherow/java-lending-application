@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: java-lending-application
+
+  datasource:
+    url: jdbc:mysql://localhost:3307/lending_application
+    username: root
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 10
+      idle-timeout: 60000
+      max-lifetime: 30000
+      connection-timeout: 60000
+      pool-name: HikariConectonPoolIPSLDatabase
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    database-platform: org.hibernate.dialect.MySQLDialect
+server:
+  port: 8181
