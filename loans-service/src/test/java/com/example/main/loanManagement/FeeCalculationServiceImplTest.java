@@ -6,7 +6,7 @@ import com.example.main.model.entity.Loan;
 import com.example.main.model.entity.LoanFee;
 import com.example.main.model.enums.LoanFeeType;
 import com.example.main.repository.LoanFeeRepository;
-import com.example.main.serviceImpl.FeeCalculationServiceImpl;
+import com.example.main.service.serviceImpl.FeeCalculationServiceImpl;
 import com.example.main.model.enums.ApplicationStage;
 import com.example.main.model.enums.CalculationType;
 import com.example.main.model.enums.FeeType;

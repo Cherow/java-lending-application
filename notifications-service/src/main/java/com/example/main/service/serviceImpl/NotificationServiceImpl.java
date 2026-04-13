@@ -13,6 +13,8 @@ import com.example.main.repository.NotificationLogRepository;
 import com.example.main.repository.NotificationTemplateRepository;
 import com.example.main.service.NotificationService;
 import com.example.main.service.TemplateRenderingService;
+import com.example.main.service.sender.NotificationSender;
+import com.example.main.service.sender.NotificationSenderFactory;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,9 +33,12 @@ public class NotificationServiceImpl implements NotificationService {
     private final NotificationTemplateRepository templateRepository;
     private final NotificationLogRepository logRepository;
     private final TemplateRenderingService templateRenderingService;
+    private final NotificationSenderFactory senderFactory;
 
     @Override
     public NotificationTemplateResponse createTemplate(CreateNotificationTemplateRequest request) {
+
+
         if (templateRepository.existsByCode(request.getCode())) {
             throw new IllegalArgumentException("Template code already exists");
         }
@@ -109,10 +114,19 @@ public class NotificationServiceImpl implements NotificationService {
 
         logRepository.save(log);
     }
-    private void simulateSend(NotificationChannel channel, String recipient, String subject, String message) {
+    private void simulateSend(NotificationChannel channel,
+                              String recipient,
+                              String subject,
+                              String message) {
+
         if (recipient == null || recipient.isBlank()) {
             throw new IllegalArgumentException("Recipient is required");
         }
+
+        NotificationSender sender = senderFactory.getSender(channel);
+        sender.send(recipient, subject, message);
     }
 
-}
+    }
+
+

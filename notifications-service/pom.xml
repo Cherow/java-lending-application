@@ -15,7 +15,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>notifications-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>java-lending-application</name>
+	<name>notifications-service</name>
 	<description>Loan lending backend application</description>
 
 	<properties>

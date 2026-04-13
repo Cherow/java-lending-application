@@ -13,4 +13,8 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
     List<Loan> findByCustomerId(Long customerId);
     List<Loan> findByStatus(LoanStatus status);
     List<Loan> findByStatusAndDueDateBefore(LoanStatus status, LocalDate date);
+    List<Loan> findByStatusInAndDueDateBefore(
+            List<LoanStatus> statuses,
+            LocalDate date
+    );
 }

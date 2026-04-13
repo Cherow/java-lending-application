@@ -13,7 +13,7 @@ import com.example.main.model.enums.FeeType;
 import com.example.main.model.enums.TenureType;
 import com.example.main.repository.ProductFeeRepository;
 import com.example.main.repository.ProductRepository;
-import com.example.main.serviceImpl.ProductServiceImpl;
+import com.example.main.service.serviceImpl.ProductServiceImpl;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

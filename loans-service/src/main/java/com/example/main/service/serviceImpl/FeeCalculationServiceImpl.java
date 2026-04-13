@@ -1,4 +1,4 @@
-package com.example.main.serviceImpl;
+package com.example.main.service.serviceImpl;
 
 import com.example.main.model.entity.Loan;
 import com.example.main.model.entity.LoanFee;

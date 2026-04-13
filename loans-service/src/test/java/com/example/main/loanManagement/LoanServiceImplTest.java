@@ -18,7 +18,7 @@ import com.example.main.model.events.LoanRepaidEvent;
 import com.example.main.repository.LoanRepaymentRepository;
 import com.example.main.repository.LoanRepository;
 import com.example.main.service.FeeCalculationService;
-import com.example.main.serviceImpl.LoanServiceImpl;
+import com.example.main.service.serviceImpl.LoanServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
