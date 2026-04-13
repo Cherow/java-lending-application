@@ -40,17 +40,17 @@ public class GlobalExceptionHandler {
     }
 
     // 4. Catch-all (real server errors only)
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiErrorResponse> handleGeneral(
-            Exception ex,
-            HttpServletRequest request
-    ) {
-        return buildResponse(
-                "Something went wrong. Please try again",
-                HttpStatus.INTERNAL_SERVER_ERROR,
-                request
-        );
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<ApiErrorResponse> handleGeneral(
+//            Exception ex,
+//            HttpServletRequest request
+//    ) {
+//        return buildResponse(
+//                "Something went wrong. Please try again",
+//                HttpStatus.INTERNAL_SERVER_ERROR,
+//                request
+//        );
+//    }
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ApiErrorResponse> handleBusinessException(
             BusinessException ex,

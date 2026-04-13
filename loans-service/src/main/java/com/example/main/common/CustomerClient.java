@@ -56,9 +56,10 @@ public class CustomerClient {
 
     }
 
-    public void validateCustomerForLoan(Long customerId, BigDecimal amount) {
+    public void validateCustomerForLoan(Long customerId, BigDecimal requestedAmount) {
         String url = customerBaseUrl + "/api/customers/" + customerId + "/validate-loan";
-        ValidateLoanRequest request = new ValidateLoanRequest(amount);
+        ValidateLoanRequest request = new ValidateLoanRequest(requestedAmount);
+        log.info("reqyes"  + Utils.setJsonString(request));
 
         try {
             webClient.post()
@@ -107,6 +108,6 @@ public class CustomerClient {
         }
     }
 
-    public record ValidateLoanRequest(BigDecimal amount) {}
+    public record ValidateLoanRequest(BigDecimal requestedAmount) {}
     public record LimitRequest(BigDecimal amount) {}
 }
