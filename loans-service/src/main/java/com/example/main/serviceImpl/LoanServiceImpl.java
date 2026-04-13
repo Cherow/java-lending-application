@@ -111,16 +111,7 @@ public class LoanServiceImpl implements LoanService {
                 finalLoan.getLoanNumber(),
                 NotificationEventType.LOAN_CREATED);
         sendToQueue(Utils.setJsonString(loanCreatedEvent));
-//        eventPublisher.publishEvent(
-//                new LoanCreatedEvent(
-//                        finalLoan.getCustomerId(),
-//                        finalLoan.getId(),
-//                        buildCustomerName(customer),
-//                        customer.getPhoneNumber(),
-//                        finalLoan.getPrincipalAmount(),
-//                        finalLoan.getLoanNumber()
-//                )
-//        );
+
 
         return LoanMapper.toResponse(finalLoan);
     }
@@ -151,15 +142,7 @@ public class LoanServiceImpl implements LoanService {
                 savedLoan.getLoanNumber(),
                 NotificationEventType.LOAN_DISBURSED);
         sendToQueue(Utils.setJsonString(loanDisbursedEvent));
-//        eventPublisher.publishEvent(
-//                new LoanDisbursedEvent(
-//                        savedLoan.getCustomerId(),
-//                        savedLoan.getId(),
-//                        buildCustomerName(customer),
-//                        customer.getPhoneNumber(),
-//                        savedLoan.getLoanNumber()
-//                )
-//        );
+
 
         return LoanMapper.toResponse(savedLoan);
     }
@@ -213,16 +196,7 @@ public class LoanServiceImpl implements LoanService {
                 request.getAmount(),
                 NotificationEventType.LOAN_REPAID);
         sendToQueue(Utils.setJsonString(repaidEvent));
-//        eventPublisher.publishEvent(
-//                new LoanRepaidEvent(
-//                        savedLoan.getCustomerId(),
-//                        savedLoan.getId(),
-//                        buildCustomerName(customer),
-//                        customer.getPhoneNumber(),
-//                        savedLoan.getLoanNumber(),
-//                        request.getAmount()
-//                )
-//        );
+
 
         return LoanMapper.toResponse(savedLoan);
     }
@@ -247,15 +221,7 @@ public class LoanServiceImpl implements LoanService {
                 savedLoan.getLoanNumber(),
                 NotificationEventType.LOAN_CANCELLED);
         sendToQueue(Utils.setJsonString(loanCancelledEvent));
-//        eventPublisher.publishEvent(
-//                new LoanCancelledEvent(
-//                        savedLoan.getCustomerId(),
-//                        savedLoan.getId(),
-//                        buildCustomerName(customer),
-//                        customer.getPhoneNumber(),
-//                        savedLoan.getLoanNumber()
-//                )
-//        );
+
 
         return LoanMapper.toResponse(savedLoan);
     }
@@ -287,16 +253,7 @@ public class LoanServiceImpl implements LoanService {
                 NotificationEventType.LOAN_WRITTEN_OFF);
 
         sendToQueue(Utils.setJsonString(loanWrittenOffEvent));
-//        eventPublisher.publishEvent(
-//                new LoanWrittenOffEvent(
-//                        savedLoan.getCustomerId(),
-//                        savedLoan.getId(),
-//                        buildCustomerName(customer),
-//                        customer.getPhoneNumber(),
-//                        savedLoan.getLoanNumber(),
-//                        savedLoan.getBalance()
-//                )
-//        );
+
 
         return LoanMapper.toResponse(savedLoan);
     }
@@ -337,8 +294,6 @@ public class LoanServiceImpl implements LoanService {
                 String string= productService.getProductById(loan.getProductId());
                 log.info("Response {}", string);
                 ProductResponse product = (ProductResponse) Utils.setJsonStringToObject(string,ProductResponse.class);
-//
-//              ProductResponse product = productService.getProductById(loan.getProductId());
 
               feeCalculationService.applyLateFees(loan, product);
                 Loan savedLoan = loanRepository.save(loan);
@@ -395,7 +350,7 @@ public class LoanServiceImpl implements LoanService {
             case MONTHS -> baseDate.plusMonths(tenure);
         };
     }
-    private boolean sendToQueue(String sparkCentralRequest) {
+    private void sendToQueue(String sparkCentralRequest) {
 
         try{
             log.info("Queue name {}",destinationQueue);
@@ -410,11 +365,9 @@ public class LoanServiceImpl implements LoanService {
                 return message;
             });
 
-            return true;
         }catch (Exception e) {
 
 
-            return false;
         }
     }
 }
