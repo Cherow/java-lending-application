@@ -58,27 +58,24 @@ public class CustomerClient {
 
     public void validateCustomerForLoan(Long customerId, BigDecimal amount) {
         String url = customerBaseUrl + "/api/customers/" + customerId + "/validate-loan";
-        log.info("Calling URL = {}", url);
-
-        String json = "{\"requestedAmount\":" + amount + "}";
+        ValidateLoanRequest request = new ValidateLoanRequest(amount);
 
         try {
-            log.info("Request body = {}", json);
-
-            ResponseEntity<String> response = webClient.post()
+            webClient.post()
                     .uri(url)
-                    .header("Content-Type", MediaType.APPLICATION_JSON_VALUE)
-                    .bodyValue(json)
-                    .exchangeToMono(clientResponse -> clientResponse.toEntity(String.class))
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .bodyValue(request)
+                    .retrieve()
+                    .toBodilessEntity()
                     .timeout(Duration.ofSeconds(10))
                     .block();
 
-            log.info("Status = {}", response.getStatusCode());
-            log.info("Body = {}", response.getBody());
-
-        } catch (Exception ex) {
-            log.error("Error calling customer service", ex);
-            throw new RuntimeException("Customer validation failed", ex);
+        } catch (WebClientResponseException.Conflict ex) {
+            throw new IllegalStateException("Customer is not eligible for loan");
+        } catch (WebClientResponseException ex) {
+            throw new RuntimeException(
+                    "Customer validation failed: " + ex.getResponseBodyAsString(), ex
+            );
         }
     }
 
